@@ -373,7 +373,7 @@ This is the pattern React developers use most often - rendering lists directly i
 ```javascript
 // React - Using .some() for conditional UI
 {
-  items.some((item) => !item.inStock) && <p>⚠️ Some items are out of stock!</p>;
+  items.some((item) => not item.inStock) && <p>⚠️ Some items are out of stock!</p>;
 }
 ```
 
