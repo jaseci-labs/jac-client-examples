@@ -224,11 +224,11 @@ cl {
                         let newCount = count + 1;
                         setCount(newCount);
                         if newCount % 5 == 0 {
-                            setLog("🎉 Milestone! Count is " + str(newCount));
+                            setLog("🎉 Milestone! Count is " + (newCount.toString()));
                         } elif newCount % 2 == 0 {
-                            setLog("Even: " + str(newCount));
+                            setLog("Even: " + (newCount.toString()));
                         } else {
-                            setLog("Odd: " + str(newCount));
+                            setLog("Odd: " + (newCount.toString()));
                         }
                     }}
                 >
@@ -435,7 +435,7 @@ cl {
                     {items.map(renderButton)}
                 </div>
                 <div style={styles["result"]}>
-                    Selected: {(selected["name"] + " (ID: " + str(selected["id"]) + ")") if selected else "None"}
+                    Selected: {(selected["name"] + " (ID: " + (selected["id"]) + ")").toString() if selected else "None"}
                 </div>
                 <div style={{ "marginTop": "15px" }}>
                     <input
@@ -626,7 +626,8 @@ cl {
 
         # Add new item
         def addItem() -> None {
-            let newItem = { "id": Date.now(), "text": "Item " + str(items.length + 1), "done": False };
+            
+            let newItem = { "id": Date.now(), "text": "Item " + (items.length + 1), "done": False };
             let newItems = items.concat([newItem]);
             setItems(newItems);
         }
