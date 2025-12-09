@@ -1,14 +1,14 @@
-# Lambda Functions in JAC-Lang (Onelang)
+# Lambda Functions in JAC-Client (Onelang)
 
 ## Arrow Functions → Lambda Functions
 
-If you're coming from a **React/JavaScript** background, this guide will help you understand how **arrow functions** translate to **lambda functions** in JAC-Lang (Onelang).
+If you're coming from a **React/JavaScript** background, this guide will help you understand how **arrow functions** translate to **lambda functions** in JAC-Client (Onelang).
 
 ---
 
 ## 🔑 Key Concept
 
-| React/JavaScript | JAC-Lang (Onelang)                     |
+| React/JavaScript | JAC-Client (Onelang)                     |
 | ---------------- | -------------------------------------- |
 | `() => { }`      | `lambda -> None { }`                   |
 | `(param) => { }` | `lambda param: Type -> ReturnType { }` |
@@ -32,7 +32,7 @@ const sayHello = () => {
 ```
 
 ```jac
-# JAC-Lang - Full syntax with body
+# JAC-Client - Full syntax with body
 let sayHello = lambda -> None {
     console.log("Hello!");
 };
@@ -59,7 +59,7 @@ n => n * 2
 ```
 
 ```jac
-# JAC-Lang - Single parameter
+# JAC-Client - Single parameter
 let double = lambda n: int -> int {
     return n * 2;
 };
@@ -88,7 +88,7 @@ const handleSelect = (id, name) => {
 ```
 
 ```jac
-# JAC-Lang - Multiple parameters
+# JAC-Client - Multiple parameters
 let add = lambda a: int, b: int -> int {
     return a + b;
 };
@@ -106,7 +106,7 @@ onClick={lambda: handleSelect(1, "Apple")}
 
 ### 4. Return Types
 
-| Scenario         | JAC-Lang Syntax                            |
+| Scenario         | JAC-Client Syntax                            |
 | ---------------- | ------------------------------------------ |
 | No return (void) | `lambda -> None { ... }`                   |
 | Returns int      | `lambda -> int { return 42; }`             |
@@ -129,10 +129,10 @@ onClick={lambda: handleSelect(1, "Apple")}
 ```
 
 ```jac
-# JAC-Lang - onClick handler
+# JAC-Client - onClick handler
 <button onClick={lambda: handleClick(id)}>Click</button>
 
-# JAC-Lang - onChange handler (define handler first)
+# JAC-Client - onChange handler (define handler first)
 let handleChange = lambda e: any -> None {
     setValue(e.target.value);
 };
@@ -174,7 +174,7 @@ When you need to do **multiple things** or have **logic** inside an onClick hand
 ```
 
 ```jac
-# JAC-Lang - Multiple actions in onClick
+# JAC-Client - Multiple actions in onClick
 <button onClick={lambda -> None {
     setLoading(True);
     fetchData();
@@ -183,7 +183,7 @@ When you need to do **multiple things** or have **logic** inside an onClick hand
     Submit
 </button>
 
-# JAC-Lang - Conditional logic in onClick
+# JAC-Client - Conditional logic in onClick
 <button onClick={lambda -> None {
     if isValid {
         handleSubmit();
@@ -194,7 +194,7 @@ When you need to do **multiple things** or have **logic** inside an onClick hand
     Submit
 </button>
 
-# JAC-Lang - Prevent default + action
+# JAC-Client - Prevent default + action
 <form onSubmit={lambda e: any -> None {
     e.preventDefault();
     handleSubmit();
@@ -202,7 +202,7 @@ When you need to do **multiple things** or have **logic** inside an onClick hand
 ```
 
 **Key Syntax Difference:**
-| Pattern | React | JAC-Lang |
+| Pattern | React | JAC-Client |
 |---------|-------|----------|
 | Simple call | `onClick={() => fn()}` | `onClick={lambda: fn()}` |
 | With event | `onClick={(e) => fn(e)}` | `onClick={lambda e: any -> None { fn(e); }}` |
@@ -222,7 +222,7 @@ useEffect(() => {
 ```
 
 ```jac
-# JAC-Lang
+# JAC-Client
 useEffect(lambda -> None {
     console.log("Effect ran!");
     # cleanup return is handled differently
@@ -244,13 +244,13 @@ const memoizedValue = useMemo(() => computeExpensive(a, b), [a, b]);
 ```
 
 ```jac
-# JAC-Lang - useCallback
+# JAC-Client - useCallback
 let memoizedCallback = useCallback(
     lambda -> None { doSomething(a, b); },
     [a, b]
 );
 
-# JAC-Lang - useMemo
+# JAC-Client - useMemo
 let memoizedValue = useMemo(
     lambda -> any { return computeExpensive(a, b); },
     [a, b]
@@ -261,7 +261,7 @@ let memoizedValue = useMemo(
 
 ### Array Methods (.map, .filter)
 
-**Important:** For `.map()` and `.filter()`, JAC-Lang works best with helper functions:
+**Important:** For `.map()` and `.filter()`, JAC-Client works best with helper functions:
 
 ```javascript
 // React
@@ -271,7 +271,7 @@ const listItems = items.map((item) => <li key={item.id}>{item.name}</li>);
 ```
 
 ```jac
-# JAC-Lang - Define helper functions
+# JAC-Client - Define helper functions
 def getName(user: dict, index: int) -> any {
     return user["name"];
 }
@@ -323,7 +323,7 @@ This is the pattern React developers use most often - rendering lists directly i
 ```
 
 ```jac
-# JAC-Lang - Inline .map() in JSX
+# JAC-Client - Inline .map() in JSX
 <div>
     {items.map(lambda item: any -> any {
         let isSelected = selected and selected["id"] == item["id"];
@@ -356,7 +356,7 @@ This is the pattern React developers use most often - rendering lists directly i
 ```
 
 ```jac
-# JAC-Lang - Filter then map inline
+# JAC-Client - Filter then map inline
 <div>
     {items.filter(lambda item: any -> any {
         return item["inStock"];
@@ -378,7 +378,7 @@ This is the pattern React developers use most often - rendering lists directly i
 ```
 
 ```jac
-# JAC-Lang - Using .some() for conditional UI
+# JAC-Client - Using .some() for conditional UI
 {items.some(lambda item: any -> any { return not item["inStock"]; }) and (
     <p>⚠️ Some items are out of stock!</p>
 )}
@@ -394,7 +394,7 @@ This is the pattern React developers use most often - rendering lists directly i
 ```
 
 ```jac
-# JAC-Lang
+# JAC-Client
 {items.every(lambda item: any -> any { return item["price"] < 10; }) and (
     <p>✅ All items under $10</p>
 )}
@@ -414,7 +414,7 @@ This is the pattern React developers use most often - rendering lists directly i
 ```
 
 ```jac
-# JAC-Lang - Using index in map
+# JAC-Client - Using index in map
 <ol>
     {items.map(lambda item: any, index: int -> any {
         return (
@@ -442,7 +442,7 @@ const fetchData = async () => {
 ```
 
 ```jac
-# JAC-Lang - Use async def for async functions
+# JAC-Client - Use async def for async functions
 async def fetchData() {
     let response = await fetch("/api/data");
     let data = await response.json();
@@ -457,7 +457,7 @@ onClick={lambda: fetchData()}
 
 ## 🔄 Quick Conversion Table
 
-| React/JavaScript                           | JAC-Lang                                                                  |
+| React/JavaScript                           | JAC-Client                                                                  |
 | ------------------------------------------ | ------------------------------------------------------------------------- |
 | `() => {}`                                 | `lambda -> None {}`                                                       |
 | `() => value`                              | `lambda: value`                                                           |
@@ -481,7 +481,7 @@ onClick={lambda: fetchData()}
 
 ## ⚠️ Key Differences
 
-1. **Type Annotations Required**: JAC-Lang requires type annotations for lambda parameters
+1. **Type Annotations Required**: JAC-Client requires type annotations for lambda parameters
 
    - `lambda x: int -> int { ... }` instead of just `x => ...`
 
@@ -505,7 +505,7 @@ onClick={lambda: fetchData()}
 ## 📁 Files in This Example
 
 - **`app.js`** - React/JavaScript arrow function examples
-- **`app.jac`** - Equivalent JAC-Lang lambda function examples
+- **`app.jac`** - Equivalent JAC-Client lambda function examples
 - **`README.md`** - This documentation
 
 ---
@@ -531,7 +531,7 @@ jac serve app.jac
 
 1. **Think "lambda" instead of "arrow"** - Same concept, different keyword
 
-2. **Always specify types** - JAC-Lang is typed, so include `: Type` for parameters and `-> ReturnType` for returns
+2. **Always specify types** - JAC-Client is typed, so include `: Type` for parameters and `-> ReturnType` for returns
 
 3. **Use `any` when uncertain** - If you're not sure of the type, `any` works like TypeScript's `any`
 
@@ -539,4 +539,4 @@ jac serve app.jac
 
 5. **`None` = void** - Use `-> None` when the function doesn't return anything (like React's void arrow functions)
 
-6. **Object syntax** - Use `{ "key": value }` with quoted keys for objects/dicts in JAC-Lang
+6. **Object syntax** - Use `{ "key": value }` with quoted keys for objects/dicts in JAC-Client

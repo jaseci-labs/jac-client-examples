@@ -1,6 +1,6 @@
-# Conditional Rendering in JAC-Lang (Onelang)
+# Conditional Rendering in JAC-Client (Onelang)
 
-A comprehensive guide to conditional rendering patterns in JAC-lang for building dynamic React-like UIs.
+A comprehensive guide to conditional rendering patterns in JAC-Client for building dynamic React-like UIs.
 
 ## 📋 Table of Contents
 
@@ -250,7 +250,7 @@ function LogicalOrExample({ username }) {
 
 ## 7. Switch Statement (⚠️ NOT SUPPORTED)
 
-> **⚠️ IMPORTANT: Switch statements are NOT currently supported in JAC-lang for client-side rendering.**
+> **⚠️ IMPORTANT: Switch statements are NOT currently supported in JAC-Client for client-side rendering.**
 
 ### React Example (NOT available in JAC):
 
@@ -662,7 +662,7 @@ def EnumBasedExample(props: dict) -> any {
 
 ## 📊 Quick Reference: JAC vs React
 
-| Feature            | React/JavaScript          | JAC-Lang            |
+| Feature            | React/JavaScript          | JAC-Client            |
 | ------------------ | ------------------------- | ------------------- |
 | Ternary            | `a ? b : c`               | `(b) if a else (c)` |
 | Logical AND        | `&&`                      | `and`               |
