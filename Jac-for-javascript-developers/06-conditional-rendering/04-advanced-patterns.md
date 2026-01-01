@@ -22,14 +22,12 @@ switch (status) {
 ### JAC-Client Object Lookup
 
 ```jac
-def StatusIcon(props: dict) -> any {
-    status = props["status"];
-
+def StatusIcon(status: str) -> any {
     icons = {
-        "success": <span style={{ "color": "green" }}>✓</span>,
-        "error": <span style={{ "color": "red" }}>✗</span>,
-        "warning": <span style={{ "color": "orange" }}>⚠</span>,
-        "info": <span style={{ "color": "blue" }}>ℹ</span>
+        "success": <span style={{ "color": "green" }}>OK</span>,
+        "error": <span style={{ "color": "red" }}>X</span>,
+        "warning": <span style={{ "color": "orange" }}>!</span>,
+        "info": <span style={{ "color": "blue" }}>i</span>
     };
 
     return icons[status] or icons["info"];
@@ -41,9 +39,7 @@ def StatusIcon(props: dict) -> any {
 ## Component Mapping
 
 ```jac
-def PageRenderer(props: dict) -> any {
-    page = props["page"];
-
+def PageRenderer(page: str) -> any {
     pages = {
         "home": <HomePage />,
         "about": <AboutPage />,
@@ -64,17 +60,17 @@ def PageRenderer(props: dict) -> any {
 ## Render Props Pattern
 
 ```jac
-def ConditionalWrapper(props: dict) -> any {
+def ConditionalWrapper(wrap: bool, children: any) -> any {
     # Conditionally wrap content
-    if props["wrap"] {
+    if wrap {
         return (
             <div className="wrapper">
-                {props["children"]}
+                {children}
             </div>
         );
     }
 
-    return props["children"];
+    return children;
 }
 
 # Usage
@@ -88,11 +84,7 @@ def ConditionalWrapper(props: dict) -> any {
 ## Multiple Fragments
 
 ```jac
-def ContentSections(props: dict) -> any {
-    showHeader = props["showHeader"];
-    showSidebar = props["showSidebar"];
-    showFooter = props["showFooter"];
-
+def ContentSections(showHeader: bool, showSidebar: bool, showFooter: bool) -> any {
     return (
         <>
             {showHeader and (
@@ -122,27 +114,20 @@ def ContentSections(props: dict) -> any {
 ## Conditional Attributes
 
 ```jac
-def Button(props: dict) -> any {
+def Button(type: str, disabled: bool, className: str, id: str, children: any) -> any {
     # Build attributes conditionally
-    attrs = {
-        "type": props["type"] or "button",
-        "disabled": props["disabled"] or False,
-        "className": props["className"] or "btn"
-    };
-
-    # Add optional attributes
-    if props["id"] {
-        attrs["id"] = props["id"];
-    }
+    buttonType = type or "button";
+    isDisabled = disabled or False;
+    buttonClass = className or "btn";
 
     return (
         <button
-            type={attrs["type"]}
-            disabled={attrs["disabled"]}
-            className={attrs["className"]}
-            id={attrs["id"]}
+            type={buttonType}
+            disabled={isDisabled}
+            className={buttonClass}
+            id={id}
         >
-            {props["children"]}
+            {children}
         </button>
     );
 }
@@ -153,34 +138,32 @@ def Button(props: dict) -> any {
 ## Enum-Based Rendering
 
 ```jac
-def OrderStatus(props: dict) -> any {
-    status = props["status"];
-
+def OrderStatus(status: str) -> any {
     statusConfig = {
         "pending": {
             "label": "Pending",
             "color": "#ffc107",
-            "icon": "⏳"
+            "icon": "..."
         },
         "processing": {
             "label": "Processing",
             "color": "#17a2b8",
-            "icon": "⚙️"
+            "icon": "~"
         },
         "shipped": {
             "label": "Shipped",
             "color": "#007bff",
-            "icon": "📦"
+            "icon": ">"
         },
         "delivered": {
             "label": "Delivered",
             "color": "#28a745",
-            "icon": "✓"
+            "icon": "OK"
         },
         "cancelled": {
             "label": "Cancelled",
             "color": "#dc3545",
-            "icon": "✗"
+            "icon": "X"
         }
     };
 
@@ -204,23 +187,22 @@ def OrderStatus(props: dict) -> any {
 ## Conditional List Rendering
 
 ```jac
-def FilteredList(props: dict) -> any {
-    items = props["items"] or [];
-    filter = props["filter"];
+def FilteredList(items: list, filter: str) -> any {
+    itemList = items or [];
 
     # Apply different filters
-    filteredItems = items;
+    filteredItems = itemList;
 
     if filter == "active" {
-        filteredItems = items.filter(lambda i: dict -> bool {
+        filteredItems = itemList.filter(lambda i: dict -> bool {
             return i["active"];
         });
     } elif filter == "completed" {
-        filteredItems = items.filter(lambda i: dict -> bool {
+        filteredItems = itemList.filter(lambda i: dict -> bool {
             return i["completed"];
         });
     } elif filter == "important" {
-        filteredItems = items.filter(lambda i: dict -> bool {
+        filteredItems = itemList.filter(lambda i: dict -> bool {
             return i["priority"] == "high";
         });
     }
@@ -244,20 +226,20 @@ def FilteredList(props: dict) -> any {
 ## Polymorphic Components
 
 ```jac
-def Text(props: dict) -> any {
-    variant = props["variant"] or "p";
+def Text(variant: str, children: any) -> any {
+    elementType = variant or "p";
 
     # Different elements based on variant
-    if variant == "h1" {
-        return <h1>{props["children"]}</h1>;
-    } elif variant == "h2" {
-        return <h2>{props["children"]}</h2>;
-    } elif variant == "h3" {
-        return <h3>{props["children"]}</h3>;
-    } elif variant == "span" {
-        return <span>{props["children"]}</span>;
+    if elementType == "h1" {
+        return <h1>{children}</h1>;
+    } elif elementType == "h2" {
+        return <h2>{children}</h2>;
+    } elif elementType == "h3" {
+        return <h3>{children}</h3>;
+    } elif elementType == "span" {
+        return <span>{children}</span>;
     } else {
-        return <p>{props["children"]}</p>;
+        return <p>{children}</p>;
     }
 }
 
@@ -309,10 +291,7 @@ def DataDisplay() -> any {
 ## Compound Conditions
 
 ```jac
-def Dashboard(props: dict) -> any {
-    user = props["user"];
-    settings = props["settings"];
-
+def Dashboard(user: dict, settings: dict) -> any {
     isAdmin = user["role"] == "admin";
     isPremium = user["subscription"] == "premium";
     hasNotifications = user["notifications"] > 0;
