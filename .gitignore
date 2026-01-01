@@ -98,3 +98,5 @@ Icon?
 *.crt
 *.sqlite
 *.sqlite3
+
+.jaccache
