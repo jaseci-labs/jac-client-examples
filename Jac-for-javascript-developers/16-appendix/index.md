@@ -23,7 +23,8 @@ Quick reference and migration guide.
 | `import { x } from 'y'` | `cl import from y { x }` |
 | `export const x` | `glob:pub x = value` |
 | `export function` | `def:pub` |
-| `props.name` | `props["name"]` |
+| Direct params | `def Comp(name: str, age: int)` |
+| Props access | `name` or `props.name` (both work) |
 | `{ key: value }` | `{"key": value}` |
 | `for (let i=0; i<5; i++)` | `for i=0 to i<5 by i+=1 {}` |
 | `for (item of items)` | `for item in items {}` |
@@ -54,14 +55,18 @@ style = { padding: "10px" };
 style = {"padding": "10px"};
 ```
 
-### 4. Props Use Bracket Notation
+### 4. Props Are Direct Parameters
 
 ```jac
-# WRONG
-name = props.name;
+# Modern approach (preferred)
+def Button(label: str, onClick: any) -> any {
+    return <button onClick={onClick}>{label}</button>;
+}
 
-# CORRECT
-name = props["name"];
+# Can also access via props
+def Button(label: str, onClick: any) -> any {
+    return <button onClick={props.onClick}>{props.label}</button>;
+}
 ```
 
 ### 5. Lambda Needs Type Annotations
@@ -74,13 +79,13 @@ onClick = (e) => handleClick(e);
 onClick = lambda e: any -> None { handleClick(e); };
 ```
 
-### 6. Booleans Are Capitalized
+### 6. Booleans Use Capital Letters
 
 ```jac
-# WRONG
+# JavaScript style (works but not idiomatic)
 isActive = true;
 
-# CORRECT
+# JAC-Client style (preferred)
 isActive = True;
 ```
 
@@ -111,7 +116,8 @@ When converting JavaScript/React to JAC-Client:
 - [ ] Change imports to `cl import from`
 - [ ] Add `:pub` for exports
 - [ ] Quote all object keys
-- [ ] Use `props["key"]` not `props.key`
+- [ ] Use direct parameters: `def Comp(name: str)` not `def Comp(props: dict)`
+- [ ] Access props directly or via `props.name` (both work)
 - [ ] Use `[x, setX] = useState()` with brackets
 - [ ] Change for loops to `for i=0 to i<n by i+=1`
 

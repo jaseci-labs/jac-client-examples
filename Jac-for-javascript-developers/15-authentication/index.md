@@ -133,14 +133,14 @@ cl import from react-router-dom { Navigate }
 cl import from @jac-client/utils { jacIsLoggedIn }
 
 cl {
-    def ProtectedRoute(props: dict) -> any {
+    def ProtectedRoute(children: any) -> any {
         isLoggedIn = jacIsLoggedIn();
 
         if not isLoggedIn {
             return <Navigate to="/login" />;
         }
 
-        return props["children"];
+        return children;
     }
 
     # Usage in routes:

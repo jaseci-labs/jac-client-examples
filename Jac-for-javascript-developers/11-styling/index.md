@@ -127,7 +127,8 @@ cl {
     StyledButton = styled.button`
         padding: 10px 20px;
         background-color: ${lambda props: any -> str {
-            return ("blue") if props["primary"] else ("gray");
+            # Access styled-components props
+            return ("blue") if props.primary else ("gray");
         }};
         color: white;
         border: none;

@@ -76,8 +76,8 @@ def MyComponent() -> any {
     return <div>Hello</div>;
 }
 
-def Button(props: dict) -> any {
-    return <button>{props["label"]}</button>;
+def Button(label: str) -> any {
+    return <button>{label}</button>;
 }
 ```
 
@@ -272,7 +272,7 @@ def:pub calculateTotal(items: list) -> float {
 
 ```jac
 # In another file
-cl import from ./utils { formatDate, calculateTotal }
+cl import from .utils { formatDate, calculateTotal }
 
 def app() -> any {
     today = formatDate(Date());

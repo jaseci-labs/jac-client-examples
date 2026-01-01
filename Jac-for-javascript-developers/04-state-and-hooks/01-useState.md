@@ -358,15 +358,15 @@ def Parent() -> any {
     );
 }
 
-def Display(props: dict) -> any {
-    return <h1>Count: {props["count"]}</h1>;
+def Display(count: int) -> any {
+    return <h1>Count: {count}</h1>;
 }
 
-def Controls(props: dict) -> any {
+def Controls(onIncrement: any, onDecrement: any) -> any {
     return (
         <div>
-            <button onClick={props["onDecrement"]}>-</button>
-            <button onClick={props["onIncrement"]}>+</button>
+            <button onClick={onDecrement}>-</button>
+            <button onClick={onIncrement}>+</button>
         </div>
     );
 }

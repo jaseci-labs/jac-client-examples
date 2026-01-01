@@ -27,7 +27,7 @@ entry-point = "src/app.jac"
 
 ```jac
 cl {
-    def app() -> any {
+    def:pub app() -> any {
         return <div>
             <h1>Hello, JAC!</h1>
         </div>;
@@ -69,7 +69,7 @@ cl {
         );
     }
 
-    def app() -> any {
+    def:pub app() -> any {
         return <Counter />;
     }
 }
@@ -79,7 +79,7 @@ cl {
 1. `cl import from react { useState }` - Import the useState hook
 2. `[count, setCount] = useState(0)` - Create state (no `const` needed)
 3. `lambda: setCount(count + 1)` - Arrow function to update state
-4. `def app()` - Required entry point that renders our Counter
+4. `def:pub app()` - Required entry point that renders our Counter
 
 ---
 
@@ -89,13 +89,13 @@ cl {
 cl import from react { useState }
 
 cl {
-    def Button(props: dict) -> any {
+    def Button(label: str, color: str, onClick: any) -> any {
         return (
             <button
-                onClick={props["onClick"]}
+                onClick={onClick}
                 style={{
                     "padding": "10px 20px",
-                    "backgroundColor": props["color"],
+                    "backgroundColor": color,
                     "color": "white",
                     "border": "none",
                     "borderRadius": "5px",
@@ -103,7 +103,7 @@ cl {
                     "marginRight": "10px"
                 }}
             >
-                {props["label"]}
+                {label}
             </button>
         );
     }
@@ -133,15 +133,16 @@ cl {
         );
     }
 
-    def app() -> any {
+    def:pub app() -> any {
         return <Counter />;
     }
 }
 ```
 
 **Key patterns:**
-- `props: dict` - Props are passed as a dictionary
-- `props["onClick"]` - Access props with bracket notation
+- Props are defined as direct function parameters: `def Button(label: str, color: str, onClick: any)`
+- Access props directly by parameter name: `label`, `color`, `onClick`
+- **Note:** You can also access via `props.label`, `props.color`, etc. - both approaches work!
 - Components are defined with `def ComponentName() -> any`
 
 ---
@@ -178,7 +179,7 @@ cl {
         );
     }
 
-    def app() -> any {
+    def:pub app() -> any {
         return <Timer />;
     }
 }
@@ -216,7 +217,7 @@ cl {
         );
     }
 
-    def app() -> any {
+    def:pub app() -> any {
         return <Greeting />;
     }
 }
@@ -264,7 +265,7 @@ cl {
         );
     }
 
-    def app() -> any {
+    def:pub app() -> any {
         return <TodoList />;
     }
 }

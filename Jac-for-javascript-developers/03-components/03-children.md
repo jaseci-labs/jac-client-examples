@@ -22,10 +22,10 @@ function Card({ children }) {
 ### JAC-Client
 
 ```jac
-def Card(props: dict) -> any {
+def Card(children: any) -> any {
     return (
         <div style={{ "border": "1px solid #ccc", "padding": "15px" }}>
-            {props["children"]}
+            {children}
         </div>
     );
 }
@@ -36,7 +36,7 @@ def Card(props: dict) -> any {
 </Card>
 ```
 
-Children are passed as `props["children"]`.
+Children are passed as a direct parameter. **Note:** You can also access as `props.children` if needed.
 
 ---
 
@@ -45,14 +45,14 @@ Children are passed as `props["children"]`.
 ### Layout Wrapper
 
 ```jac
-def PageLayout(props: dict) -> any {
+def PageLayout(children: any) -> any {
     return (
         <div style={{ "maxWidth": "1200px", "margin": "0 auto" }}>
             <header style={{ "padding": "20px", "backgroundColor": "#f5f5f5" }}>
                 <h1>My App</h1>
             </header>
             <main style={{ "padding": "20px" }}>
-                {props["children"]}
+                {children}
             </main>
             <footer style={{ "padding": "20px", "backgroundColor": "#333", "color": "white" }}>
                 Footer
@@ -72,10 +72,10 @@ def app() -> any {
 }
 ```
 
-### Card Wrapper
+### Card Wrapper with Title
 
 ```jac
-def Card(props: dict) -> any {
+def Card(title: str, children: any) -> any {
     return (
         <div style={{
             "backgroundColor": "white",
@@ -84,8 +84,8 @@ def Card(props: dict) -> any {
             "padding": "20px",
             "marginBottom": "20px"
         }}>
-            {props["title"] and <h3>{props["title"]}</h3>}
-            {props["children"]}
+            {title and <h3>{title}</h3>}
+            {children}
         </div>
     );
 }
@@ -102,8 +102,8 @@ def Card(props: dict) -> any {
 ## Conditional Children
 
 ```jac
-def Modal(props: dict) -> any {
-    if not props["isOpen"] {
+def Modal(isOpen: bool, onClose: any, children: any) -> any {
+    if not isOpen {
         return <></>;
     }
 
@@ -126,12 +126,12 @@ def Modal(props: dict) -> any {
                 "minWidth": "300px"
             }}>
                 <button
-                    onClick={props["onClose"]}
+                    onClick={onClose}
                     style={{ "float": "right" }}
                 >
                     X
                 </button>
-                {props["children"]}
+                {children}
             </div>
         </div>
     );
@@ -161,12 +161,12 @@ def app() -> any {
 ### Using Props for Named Slots
 
 ```jac
-def Layout(props: dict) -> any {
+def Layout(header: any, footer: any, children: any) -> any {
     return (
         <div style={{ "display": "grid", "gridTemplateRows": "auto 1fr auto" }}>
-            <header>{props["header"]}</header>
-            <main>{props["children"]}</main>
-            <footer>{props["footer"]}</footer>
+            <header>{header}</header>
+            <main>{children}</main>
+            <footer>{footer}</footer>
         </div>
     );
 }
@@ -174,40 +174,10 @@ def Layout(props: dict) -> any {
 # Usage
 <Layout
     header={<nav>Navigation</nav>}
-    footer={<p>Copyright 2024</p>}
+    footer={<p>Copyright 2026</p>}
 >
     <article>Main content</article>
 </Layout>
-```
-
-### Sidebar Layout
-
-```jac
-def SidebarLayout(props: dict) -> any {
-    return (
-        <div style={{ "display": "flex" }}>
-            <aside style={{ "width": "250px", "backgroundColor": "#f5f5f5" }}>
-                {props["sidebar"]}
-            </aside>
-            <main style={{ "flex": "1", "padding": "20px" }}>
-                {props["children"]}
-            </main>
-        </div>
-    );
-}
-
-# Usage
-<SidebarLayout
-    sidebar={
-        <nav>
-            <a href="/">Home</a>
-            <a href="/about">About</a>
-        </nav>
-    }
->
-    <h1>Page Content</h1>
-    <p>Main content area.</p>
-</SidebarLayout>
 ```
 
 ---
@@ -221,29 +191,30 @@ cl import from react { useState }
 
 cl {
     # Small, reusable button
-    def IconButton(props: dict) -> any {
+    def IconButton(icon: str, label: str, onClick: any, color: str) -> any {
+        buttonColor = color or "#007bff";
         return (
             <button
-                onClick={props["onClick"]}
+                onClick={onClick}
                 style={{
                     "padding": "8px 12px",
                     "border": "none",
                     "borderRadius": "4px",
                     "cursor": "pointer",
-                    "backgroundColor": props["color"] or "#007bff",
+                    "backgroundColor": buttonColor,
                     "color": "white"
                 }}
             >
-                {props["icon"]} {props["label"]}
+                {icon} {label}
             </button>
         );
     }
 
     # Composed toolbar
-    def Toolbar(props: dict) -> any {
+    def Toolbar(children: any) -> any {
         return (
             <div style={{ "display": "flex", "gap": "10px", "marginBottom": "20px" }}>
-                {props["children"]}
+                {children}
             </div>
         );
     }
@@ -255,9 +226,9 @@ cl {
         return (
             <div>
                 <Toolbar>
-                    <IconButton icon="B" label="Bold" onClick={lambda: console.log("bold")} />
-                    <IconButton icon="I" label="Italic" onClick={lambda: console.log("italic")} />
-                    <IconButton icon="U" label="Underline" onClick={lambda: console.log("underline")} />
+                    <IconButton icon="B" label="Bold" color="#007bff" onClick={lambda: console.log("bold")} />
+                    <IconButton icon="I" label="Italic" color="#007bff" onClick={lambda: console.log("italic")} />
+                    <IconButton icon="U" label="Underline" color="#007bff" onClick={lambda: console.log("underline")} />
                 </Toolbar>
                 <textarea
                     value={content}
@@ -300,7 +271,7 @@ def withLoading(WrappedComponent: any) -> any {
 ## Render Props Pattern
 
 ```jac
-def MouseTracker(props: dict) -> any {
+def MouseTracker(render: any) -> any {
     [position, setPosition] = useState({ "x": 0, "y": 0 });
 
     def handleMouseMove(e: any) -> None {
@@ -312,7 +283,7 @@ def MouseTracker(props: dict) -> any {
             onMouseMove={handleMouseMove}
             style={{ "height": "100vh" }}
         >
-            {props["render"](position)}
+            {render(position)}
         </div>
     );
 }
@@ -330,8 +301,8 @@ def MouseTracker(props: dict) -> any {
 ### Mapping Children Alternatives
 
 ```jac
-def List(props: dict) -> any {
-    items = props["items"] or [];
+def List(items: list) -> any {
+    itemList = items or [];
 
     def renderItem(item: dict, index: int) -> any {
         return (
@@ -341,7 +312,7 @@ def List(props: dict) -> any {
         );
     }
 
-    return <ul>{items.map(renderItem)}</ul>;
+    return <ul>{itemList.map(renderItem)}</ul>;
 }
 
 # Usage
@@ -355,9 +326,8 @@ def List(props: dict) -> any {
 ### Custom Item Renderer
 
 ```jac
-def List(props: dict) -> any {
-    items = props["items"] or [];
-    renderItem = props["renderItem"];
+def List(items: list, renderItem: any) -> any {
+    itemList = items or [];
 
     def defaultRender(item: any, index: int) -> any {
         return <li key={index}>{item}</li>;
@@ -365,7 +335,7 @@ def List(props: dict) -> any {
 
     renderer = renderItem or defaultRender;
 
-    return <ul>{items.map(renderer)}</ul>;
+    return <ul>{itemList.map(renderer)}</ul>;
 }
 
 # Usage with custom renderer
@@ -387,10 +357,11 @@ def List(props: dict) -> any {
 
 | Pattern | Description |
 |---------|-------------|
-| `props["children"]` | Access nested children |
-| Named slots | Pass components as props |
+| `children: any` | Children passed as direct parameter |
+| `props.children` | Alternative access via props |
+| Named slots | Pass components as separate props |
 | Wrapper components | Use children for content |
-| Conditional render | Show/hide based on props |
+| Conditional render | Show/hide based on parameters |
 | Composition | Build complex from simple |
 
 ---

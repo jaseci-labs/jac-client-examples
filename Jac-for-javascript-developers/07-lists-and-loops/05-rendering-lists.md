@@ -204,14 +204,14 @@ def TodoList() -> any {
 ## Empty State
 
 ```jac
-def ItemList(props: dict) -> any {
-    items = props["items"] or [];
+def ItemList(items: list, onAdd: any) -> any {
+    itemList = items or [];
 
-    if items.length == 0 {
+    if itemList.length == 0 {
         return (
             <div style={{ "textAlign": "center", "padding": "20px" }}>
                 <p>No items found</p>
-                <button onClick={props["onAdd"]}>Add Item</button>
+                <button onClick={onAdd}>Add Item</button>
             </div>
         );
     }
@@ -220,7 +220,7 @@ def ItemList(props: dict) -> any {
         return <li key={item["id"]}>{item["name"]}</li>;
     }
 
-    return <ul>{items.map(renderItem)}</ul>;
+    return <ul>{itemList.map(renderItem)}</ul>;
 }
 ```
 

@@ -47,10 +47,10 @@ my-project/
 **components/button.jac:**
 ```jac
 cl {
-    def:pub Button(props: dict) -> any {
+    def:pub Button(onClick: any, children: any) -> any {
         return (
-            <button onClick={props["onClick"]}>
-                {props["children"]}
+            <button onClick={onClick}>
+                {children}
             </button>
         );
     }
@@ -60,10 +60,10 @@ cl {
 **components/header.jac:**
 ```jac
 cl {
-    def:pub Header(props: dict) -> any {
+    def:pub Header(title: str) -> any {
         return (
             <header>
-                <h1>{props["title"]}</h1>
+                <h1>{title}</h1>
             </header>
         );
     }
@@ -73,8 +73,8 @@ cl {
 **app.jac:**
 ```jac
 cl import from react { useState }
-cl import from ./components/button { Button }
-cl import from ./components/header { Header }
+cl import from .components.button { Button }
+cl import from .components.header { Header }
 
 cl {
     def app() -> any {
@@ -117,9 +117,9 @@ app/
 Import with full path:
 
 ```jac
-cl import from ./components/ui/button { Button }
-cl import from ./components/layout/header { Header }
-cl import from ./features/auth/login { LoginForm }
+cl import from .components.ui.button { Button }
+cl import from .components.layout.header { Header }
+cl import from .features.auth.login { LoginForm }
 ```
 
 ---

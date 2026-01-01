@@ -30,7 +30,27 @@ def Greeting(name: str, age: int) -> any {
 
 1. Props are defined as **direct function parameters** with types
 2. Access props directly by name (like JavaScript destructuring)
-3. Type annotations are required: `name: str`, `age: int`, etc.
+3. **Alternative:** You can also access via `props.parameterName` - both approaches work!
+4. Type annotations are required: `name: str`, `age: int`, etc.
+
+### Dual Access Pattern
+
+```jac
+def TodoItem(id: str, text: str, onDelete: any) -> any {
+    # Access directly by parameter name (preferred)
+    console.log(text);
+    console.log(id);
+
+    # OR access via props (also works!)
+    console.log(props.text);
+    console.log(props.id);
+
+    # Both work! You can mix approaches
+    return <div onClick={lambda: onDelete(id)}>
+        {props.text}  {# Using props.text #}
+    </div>;
+}
+```
 
 ---
 

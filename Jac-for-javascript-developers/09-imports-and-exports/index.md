@@ -34,13 +34,13 @@ cl import from axios { default as axios }
 
 ```jac
 # Same folder
-cl import from ./button { Button }
+cl import from .button { Button }
 
 # Parent folder
-cl import from ../components/header { Header }
+cl import from ..components.header { Header }
 
 # Nested path
-cl import from ./components/ui/card { Card }
+cl import from .components.ui.card { Card }
 ```
 
 ---
@@ -67,8 +67,8 @@ Use `:pub` annotation to export:
 
 ```jac
 # Export function
-def:pub MyButton(props: dict) -> any {
-    return <button>{props["label"]}</button>;
+def:pub MyButton(label: str) -> any {
+    return <button>{label}</button>;
 }
 
 # Export variable
@@ -95,13 +95,13 @@ enum:pub Status {
 **button.jac:**
 ```jac
 cl {
-    def:pub Button(props: dict) -> any {
+    def:pub Button(onClick: any, children: any) -> any {
         return (
             <button
-                onClick={props["onClick"]}
+                onClick={onClick}
                 style={{"padding": "10px 20px"}}
             >
-                {props["children"]}
+                {children}
             </button>
         );
     }
@@ -111,7 +111,7 @@ cl {
 **app.jac:**
 ```jac
 cl import from react { useState }
-cl import from ./button { Button }
+cl import from .button { Button }
 
 cl {
     def app() -> any {
@@ -136,7 +136,7 @@ cl {
 | Type | Syntax |
 |------|--------|
 | Import npm | `cl import from package { items }` |
-| Import local | `cl import from ./path { items }` |
+| Import local | `cl import from .path { items }` |
 | Export function | `def:pub name() -> type { }` |
 | Export variable | `glob:pub name = value` |
 | Export class | `obj:pub Name { }` |

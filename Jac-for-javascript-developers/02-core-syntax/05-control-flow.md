@@ -397,9 +397,7 @@ def processUser(user: dict) -> any {
 ## Control Flow in Components
 
 ```jac
-def UserList(props: dict) -> any {
-    users = props["users"];
-
+def UserList(users: list) -> any {
     # Early return for empty
     if users.length == 0 {
         return <p>No users found</p>;

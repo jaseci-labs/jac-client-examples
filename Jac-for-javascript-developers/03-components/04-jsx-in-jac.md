@@ -125,8 +125,8 @@ def StyledComponent() -> any {
 ### Dynamic Styles
 
 ```jac
-def DynamicStyle(props: dict) -> any {
-    bgColor = ("#28a745") if props["active"] else ("#6c757d");
+def DynamicStyle(active: bool, children: any) -> any {
+    bgColor = ("#28a745") if active else ("#6c757d");
 
     return (
         <div style={{
@@ -134,7 +134,7 @@ def DynamicStyle(props: dict) -> any {
             "backgroundColor": bgColor,
             "color": "white"
         }}>
-            {props["children"]}
+            {children}
         </div>
     );
 }
@@ -156,28 +156,26 @@ def DynamicStyle(props: dict) -> any {
 ### Dynamic Classes
 
 ```jac
-def Button(props: dict) -> any {
+def Button(label: str, primary: bool, large: bool) -> any {
     baseClass = "btn";
-    colorClass = ("btn-primary") if props["primary"] else ("btn-secondary");
-    sizeClass = ("btn-lg") if props["large"] else ("btn-sm");
+    colorClass = ("btn-primary") if primary else ("btn-secondary");
+    sizeClass = ("btn-lg") if large else ("btn-sm");
 
     className = baseClass + " " + colorClass + " " + sizeClass;
 
-    return <button className={className}>{props["label"]}</button>;
+    return <button className={className}>{label}</button>;
 }
 ```
 
 ### Conditional Classes
 
 ```jac
-def Tab(props: dict) -> any {
-    isActive = props["active"];
-
-    className = ("tab active") if isActive else ("tab");
+def Tab(label: str, active: bool) -> any {
+    className = ("tab active") if active else ("tab");
 
     return (
         <div className={className}>
-            {props["label"]}
+            {label}
         </div>
     );
 }
@@ -317,8 +315,8 @@ Always provide unique keys:
 ### Return Nothing
 
 ```jac
-def MaybeRender(props: dict) -> any {
-    if not props["show"] {
+def MaybeRender(show: bool) -> any {
+    if not show {
         return <></>;  # Empty fragment
     }
 
@@ -334,7 +332,7 @@ def MaybeRender(props: dict) -> any {
 def Component() -> any {
     return (
         <div>
-            {# This is a comment in JSX #}
+            # This is a comment in JSX
             <h1>Title</h1>
         </div>
     );
@@ -348,9 +346,9 @@ def Component() -> any {
 Use dangerouslySetInnerHTML (same as React):
 
 ```jac
-def RawHTML(props: dict) -> any {
+def RawHTML(html: str) -> any {
     return (
-        <div dangerouslySetInnerHTML={{ "__html": props["html"] }} />
+        <div dangerouslySetInnerHTML={{ "__html": html }} />
     );
 }
 
@@ -377,9 +375,9 @@ def RawHTML(props: dict) -> any {
 ```jac
 # Pass individual props
 <Input
-    value={props["value"]}
-    onChange={props["onChange"]}
-    placeholder={props["placeholder"]}
+    value={value}
+    onChange={onChange}
+    placeholder={placeholder}
 />
 ```
 

@@ -271,8 +271,8 @@ cl import from react { useState, useEffect, useCallback }
 cl import from react-router-dom { Link, useNavigate }
 
 # Local files
-cl import from ./components { Header, Footer }
-cl import from ./utils { formatDate }
+cl import from .components { Header, Footer }
+cl import from .utils { formatDate }
 ```
 
 ---

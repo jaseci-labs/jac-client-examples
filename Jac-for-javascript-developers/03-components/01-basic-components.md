@@ -143,19 +143,19 @@ def todo_list() -> any { }
 cl import from react { useState }
 
 cl {
-    def Button(props: dict) -> any {
+    def Button(label: str, color: str, onClick: any) -> any {
         return (
             <button
-                onClick={props["onClick"]}
+                onClick={onClick}
                 style={{
                     "padding": "10px 20px",
-                    "backgroundColor": props["color"],
+                    "backgroundColor": color,
                     "color": "white",
                     "border": "none",
                     "borderRadius": "5px"
                 }}
             >
-                {props["label"]}
+                {label}
             </button>
         );
     }
@@ -233,8 +233,8 @@ def Fragment() -> any {
 ### Return Nothing
 
 ```jac
-def MaybeShow(props: dict) -> any {
-    if not props["visible"] {
+def MaybeShow(visible: bool) -> any {
+    if not visible {
         return <></>;  # Return empty fragment
     }
 
@@ -281,7 +281,7 @@ cl {
 
 **app.jac:**
 ```jac
-cl import from ./components/Header { Header }
+cl import from .components.Header { Header }
 
 cl {
     def app() -> any {
@@ -306,13 +306,13 @@ Use `:pub` to export components:
 
 cl {
     # Exported - can be imported
-    def:pub Button(props: dict) -> any {
-        return <button>{props["label"]}</button>;
+    def:pub Button(label: str) -> any {
+        return <button>{label}</button>;
     }
 
     # Private - only used in this file
-    def ButtonIcon(props: dict) -> any {
-        return <span>{props["icon"]}</span>;
+    def ButtonIcon(icon: str) -> any {
+        return <span>{icon}</span>;
     }
 }
 ```
