@@ -76,7 +76,7 @@ jac_logs/
 # LittleX runtime artifacts
 app.session*
 compiled/
-src/
+/src/
 
 # IDE / Editor settings
 .vscode/
