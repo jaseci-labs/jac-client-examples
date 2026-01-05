@@ -1,16 +1,41 @@
-# all-in-one
+  # all-in-one
 
-## Running Jac Code
 
-make sure node modules are installed:
-```bash
-npm install
+A Jac client-side application with React and TypeScript support.
+
+## Project Structure
+
+```
+all-in-one/
+├── jac.toml              # Project configuration
+├── src/                  # Source files
+│   ├── app.jac           # Main application entry
+│   └── components/       # Reusable components
+│       └── Button.tsx    # Example TypeScript component
+├── assets/               # Static assets (images, fonts, etc.)
+└── build/                # Build output (generated)
 ```
 
-To run your Jac code, use the Jac CLI:
+## Getting Started
+
+Start the development server:
 
 ```bash
-jac serve app.jac
+jac serve src/app.jac
 ```
 
-Happy coding with Jac!
+## TypeScript Support
+
+Create TypeScript components in `src/components/` and import them in your Jac files:
+
+```jac
+cl import from "./components/Button.tsx" { Button }
+```
+
+## Adding Dependencies
+
+Add npm packages with the --cl flag:
+
+```bash
+jac add --cl react-router-dom
+```

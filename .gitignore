@@ -76,7 +76,7 @@ jac_logs/
 # LittleX runtime artifacts
 app.session*
 compiled/
-src/
+/src/
 
 # IDE / Editor settings
 .vscode/
@@ -98,3 +98,5 @@ Icon?
 *.crt
 *.sqlite
 *.sqlite3
+
+.jaccache
